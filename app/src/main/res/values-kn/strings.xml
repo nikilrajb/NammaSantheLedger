@@ -89,4 +89,8 @@
     <string name="try_different_search">ವಿಭಿನ್ನ ಹುಡುಕಾಟವನ್ನು ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಶೋಧನೆಯನ್ನು ಸರಿಹೊಂದಿಸಿ</string>
     <string name="transaction_date">ದಿನಾಂಕ: %1$s</string>
     <string name="transaction_amount">%1$s • %2$s</string>
+
+    <!-- Placeholder Hints -->
+    <string name="placeholder_customer_name">ಉದಾ. ಕಮಲ</string>
+    <string name="placeholder_note">ಉದಾ. ಸೌತೆಕಾಯಿ ಮತ್ತು ಈರುಳ್ಳಿ</string>
 </resources>

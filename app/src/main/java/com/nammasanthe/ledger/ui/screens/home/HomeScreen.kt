@@ -149,10 +149,8 @@ fun HomeScreen(
 
                 item {
                     QuickActionsCard(
-                        currentLanguage = state.languageCode,
                         onAddCustomer = onNavigateToAddCustomer,
-                        onSummary = onNavigateToSummary,
-                        onLanguage = { showLanguageSheet = true }
+                        onSummary = onNavigateToSummary
                     )
                 }
 
@@ -432,10 +430,8 @@ private fun DashboardMetricCard(
 
 @Composable
 private fun QuickActionsCard(
-    currentLanguage: String,
     onAddCustomer: () -> Unit,
-    onSummary: () -> Unit,
-    onLanguage: () -> Unit
+    onSummary: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -460,13 +456,6 @@ private fun QuickActionsCard(
                 subtitle = stringResource(R.string.dashboard_overview),
                 accent = CreditGreen,
                 onClick = onSummary
-            )
-            ActionRow(
-                icon = Icons.Default.Language,
-                title = stringResource(R.string.change_language),
-                subtitle = languageLabel(currentLanguage),
-                accent = TextSecondary,
-                onClick = onLanguage
             )
         }
     }

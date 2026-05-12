@@ -95,4 +95,8 @@
     <string name="try_different_search">Try a different search or adjust filters</string>
     <string name="transaction_date">Date: %1$s</string>
     <string name="transaction_amount">%1$s • %2$s</string>
+
+    <!-- Placeholder Hints -->
+    <string name="placeholder_customer_name">e.g. Kamala</string>
+    <string name="placeholder_note">e.g. Tomatoes and onions</string>
 </resources>

@@ -108,7 +108,7 @@ fun AddEditCustomerScreen(
                     value         = state.name,
                     onValueChange = viewModel::onNameChange,
                     label         = { Text(stringResource(R.string.customer_name)) },
-                    placeholder   = { Text("e.g. Kamala") },
+                    placeholder   = { Text(stringResource(R.string.placeholder_customer_name)) },
                     leadingIcon   = { Icon(Icons.Default.Person, null, tint = Saffron700) },
                     isError       = state.nameError != null,
                     supportingText= { 

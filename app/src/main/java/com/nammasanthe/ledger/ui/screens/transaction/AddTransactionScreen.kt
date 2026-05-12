@@ -144,7 +144,7 @@ fun AddTransactionScreen(
                     value  = state.note,
                     onValueChange = viewModel::onNoteChange,
                     label  = { Text(stringResource(R.string.note_optional)) },
-                    placeholder = { Text("e.g. Tomatoes and onions") },
+                    placeholder = { Text(stringResource(R.string.placeholder_note)) },
                     leadingIcon = { Icon(Icons.Default.Note, null, tint = Saffron700) },
                     isError     = state.noteError != null,
                     supportingText = { 
