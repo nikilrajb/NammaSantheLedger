@@ -15,3 +15,4 @@ local.properties
 .env
 FEATURE_ROADMAP.md
 CODEBASE_STRUCTURE.md
+TWILIO_SETUP.md

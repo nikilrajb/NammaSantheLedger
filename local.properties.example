@@ -1,0 +1,22 @@
+# local.properties — LOCAL DEVELOPMENT ONLY
+# This file should be git-ignored and never committed.
+# Copy this template to `local.properties` and fill in your own credentials.
+
+# Twilio Configuration (Optional)
+# Get these values from https://www.twilio.com/console
+# 1. Account SID: Found at the top of the Twilio Console
+# 2. Auth Token: Also in the Twilio Console (keep it secret!)
+# 3. Phone Number: A Twilio phone number you've purchased or verified
+
+TWILIO_ACCOUNT_SID=your-twilio-account-sid-here
+TWILIO_AUTH_TOKEN=your-twilio-auth-token-here
+TWILIO_PHONE_NUMBER=+1234567890
+
+# Example (do not use in production):
+# TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# TWILIO_AUTH_TOKEN=your_auth_token_here
+# TWILIO_PHONE_NUMBER=+14155238886
+
+# Android SDK
+# (These are usually auto-configured by Android Studio)
+sdk.dir=/path/to/Android/sdk

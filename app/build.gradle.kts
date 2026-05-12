@@ -87,6 +87,10 @@ dependencies {
     // ── DataStore ─────────────────────────────────────────────────────
     implementation(libs.datastore.preferences)
 
+    // ── Twilio SDK for SMS/WhatsApp ────────────────────────────────────
+    implementation("com.twilio.sdk:twilio:9.2.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
     // ── Debug ─────────────────────────────────────────────────────────
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
