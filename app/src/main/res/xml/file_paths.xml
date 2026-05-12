@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/xml/file_paths.xml — required for FileProvider -->
+<paths>
+    <cache-path name="shared_images" path="images/" />
+    <files-path name="shared_files"  path="files/" />
+</paths>

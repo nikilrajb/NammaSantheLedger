@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/strings.xml — all user-facing strings -->
+<resources>
+    <string name="app_name">Namma Santhe Ledger</string>
+    <string name="app_tagline">Your Market, Your Account</string>
+
+    <!-- Navigation labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_customers">Customers</string>
+    <string name="nav_summary">Summary</string>
+
+    <!-- Customer screen -->
+    <string name="add_customer">Add Customer</string>
+    <string name="edit_customer">Edit Customer</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="delete_customer_confirm">Delete this customer and all their transactions?</string>
+    <string name="no_customers_yet">No customers yet</string>
+    <string name="add_customer_hint">Tap \'Add Customer\' below to add your first customer</string>
+
+    <!-- Transaction screen -->
+    <string name="add_entry">Add Entry</string>
+    <string name="udari_credit">Udari (Credit)</string>
+    <string name="payment_received">Payment Received</string>
+    <string name="amount">Amount</string>
+    <string name="note_optional">Note (Optional)</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="no_transactions_yet">No transactions yet</string>
+    <string name="add_transaction_hint">Tap \'Add Entry\' to record the first Udari or Payment</string>
+
+    <!-- Balance Labels -->
+    <string name="overview">Overview</string>
+    <string name="dashboard_overview">Today at a glance</string>
+    <string name="dashboard_quick_actions">Quick actions</string>
+    <string name="dashboard_customers">Customers</string>
+    <string name="dashboard_no_customers">No customers yet</string>
+    <string name="dashboard_no_customers_hint">Tap "Add Customer" to add your first customer</string>
+    <string name="dashboard_no_results">No results found</string>
+    <string name="dashboard_no_results_hint">Try a different name or add a new customer</string>
+    <string name="dashboard_current_language">Language: %1$s</string>
+    <string name="customer_count">%1$d customers</string>
+    <string name="total_outstanding">Total Outstanding</string>
+    <string name="net_balance">Net Balance</string>
+    <string name="customer_owes">Customer owes you</string>
+    <string name="you_owe">You gave extra (Advance)</string>
+    <string name="all_settled">All settled</string>
+    <string name="owes_label">Owes %1$s</string>
+    <string name="advance_label">Advance %1$s</string>
+    <string name="settled">Settled</string>
+
+    <!-- Reminder -->
+    <string name="send_reminder">Send Reminder</string>
+    <string name="remind">Remind</string>
+    <string name="whatsapp_not_installed">WhatsApp not found. Sending SMS instead.</string>
+
+    <!-- Common Actions -->
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+
+    <!-- Errors -->
+    <string name="error_name_required">Name is required</string>
+    <string name="error_phone_invalid">Enter a valid 10-digit number</string>
+    <string name="error_amount_invalid">Enter a valid amount greater than 0</string>
+    <string name="error_duplicate_phone">A customer with this number already exists</string>
+
+    <!-- Language -->
+    <string name="change_language">Change Language</string>
+    <string name="select_language">Select Language</string>
+    <string name="english">English</string>
+    <string name="kannada">ಕನ್ನಡ (Kannada)</string>
+
+    <!-- Transaction Screen -->
+    <string name="transaction_type">Transaction Type</string>
+    <string name="net_outflow">Net Outflow</string>
+    <string name="net_inflow">Net Inflow</string>
+    <string name="try_different_date">Try selecting a different date</string>
+    <string name="edit_transaction">Edit Entry</string>
+    <string name="note">Note</string>
+    <string name="character_limit">%1$d/80</string>
+
+    <!-- Summary Screen -->
+    <string name="previous_day">Previous day</string>
+    <string name="next_day">Next day</string>
+
+    <!-- Search & Filter -->
+    <string name="search_transactions">Search transactions...</string>
+    <string name="filter">Filter</string>
+    <string name="all_transactions">All</string>
+    <string name="filter_udari">Credits</string>
+    <string name="filter_payment">Payments</string>
+    <string name="clear_filters">Clear Filters</string>
+    <string name="no_results_found">No transactions found</string>
+    <string name="try_different_search">Try a different search or adjust filters</string>
+    <string name="transaction_date">Date: %1$s</string>
+    <string name="transaction_amount">%1$s • %2$s</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Modern Material 3 Theme -->
+    <style name="Theme.NammaSantheLedger" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Status bar colour matches app TopAppBar (Saffron 700) -->
+        <item name="android:statusBarColor">#E65100</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">#FFF8F0</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>
