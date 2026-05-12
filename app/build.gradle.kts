@@ -42,7 +42,7 @@ android {
     }
 
     packaging {
-        resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" }
+        resources { excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}" }
     }
 }
 
@@ -90,6 +90,8 @@ dependencies {
     // ── Twilio SDK for SMS/WhatsApp ────────────────────────────────────
     implementation("com.twilio.sdk:twilio:9.2.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.google.mlkit:translate:17.0.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // ── Debug ─────────────────────────────────────────────────────────
     debugImplementation(libs.compose.ui.tooling)

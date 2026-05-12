@@ -140,9 +140,9 @@ fun AddEditCustomerScreen(
                     value         = state.phone,
                     onValueChange = viewModel::onPhoneChange,
                     label         = { Text(stringResource(R.string.mobile_number)) },
-                    placeholder   = { Text("10-digit number") },
+                    placeholder   = { Text(stringResource(R.string.placeholder_phone_hint)) },
                     leadingIcon   = { Icon(Icons.Default.Phone, null, tint = Saffron700) },
-                    prefix        = { Text("+91 ", fontWeight = FontWeight.Bold) },
+                    prefix        = { Text(stringResource(R.string.phone_prefix), fontWeight = FontWeight.Bold) },
                     isError       = state.phoneError != null,
                     supportingText= { 
                         if (state.phoneError != null) {

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nammasanthe.ledger.data.local.entity.Customer
 import com.nammasanthe.ledger.data.repository.CustomerRepository
+import com.nammasanthe.ledger.data.repository.SettingsRepository
 import com.nammasanthe.ledger.utils.FormatUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -27,7 +28,8 @@ data class CustomerFormState(
 
 @HiltViewModel
 class CustomerViewModel @Inject constructor(
-    private val customerRepo: CustomerRepository
+    private val customerRepo: CustomerRepository,
+    private val settingsRepo: SettingsRepository
 ) : ViewModel() {
 
     private val _formState = MutableStateFlow(CustomerFormState())
@@ -37,6 +39,8 @@ class CustomerViewModel @Inject constructor(
     val event: SharedFlow<CustomerFormEvent> = _event.asSharedFlow()
 
     private val _searchQuery = MutableStateFlow("")
+    val languageCode: StateFlow<String> = settingsRepo.languageCode
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), "en")
     val customers: StateFlow<List<Customer>> = _searchQuery
         .debounce(300L)  // wait 300ms after last keystroke before querying
         .flatMapLatest { q ->

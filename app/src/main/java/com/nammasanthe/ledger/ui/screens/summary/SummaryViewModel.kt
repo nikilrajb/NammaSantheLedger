@@ -3,6 +3,7 @@ package com.nammasanthe.ledger.ui.screens.summary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nammasanthe.ledger.data.local.entity.Transaction
+import com.nammasanthe.ledger.data.repository.SettingsRepository
 import com.nammasanthe.ledger.data.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -15,19 +16,24 @@ data class SummaryUiState(
     val totalCredits    : Double            = 0.0,
     val totalPayments   : Double            = 0.0,
     val netFlow         : Double            = 0.0,
+    val languageCode    : String            = "en",
     val isLoading       : Boolean           = true
 )
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
-    private val txRepo: TransactionRepository
+    private val txRepo: TransactionRepository,
+    private val settingsRepo: SettingsRepository
 ) : ViewModel() {
 
     private val _selectedDate = MutableStateFlow(System.currentTimeMillis())
 
     val uiState: StateFlow<SummaryUiState> = _selectedDate
         .flatMapLatest { dateMs ->
-            txRepo.getTransactionsForDate(dateMs).map { txs ->
+            combine(
+                txRepo.getTransactionsForDate(dateMs),
+                settingsRepo.languageCode
+            ) { txs, languageCode ->
                 val credits  = txs.filter { it.type.name == "CREDIT"  }.sumOf { it.amount }
                 val payments = txs.filter { it.type.name == "PAYMENT" }.sumOf { it.amount }
                 SummaryUiState(
@@ -36,6 +42,7 @@ class SummaryViewModel @Inject constructor(
                     totalCredits   = credits,
                     totalPayments  = payments,
                     netFlow        = credits - payments,
+                    languageCode   = languageCode,
                     isLoading      = false
                 )
             }

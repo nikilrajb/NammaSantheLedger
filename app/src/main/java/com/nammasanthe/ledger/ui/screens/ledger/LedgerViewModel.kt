@@ -7,6 +7,7 @@ import com.nammasanthe.ledger.data.local.entity.Transaction
 import com.nammasanthe.ledger.data.local.entity.TransactionType
 import com.nammasanthe.ledger.data.repository.CustomerRepository
 import com.nammasanthe.ledger.data.repository.TransactionRepository
+import com.nammasanthe.ledger.data.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,13 +25,15 @@ data class LedgerUiState(
     val netBalance        : Double             = 0.0,
     val isLoading         : Boolean            = true,
     val searchQuery       : String             = "",
-    val selectedFilter    : TransactionFilter  = TransactionFilter.ALL
+    val selectedFilter    : TransactionFilter  = TransactionFilter.ALL,
+    val languageCode      : String             = "en"
 )
 
 @HiltViewModel
 class LedgerViewModel @Inject constructor(
     private val customerRepo    : CustomerRepository,
-    private val transactionRepo : TransactionRepository
+    private val transactionRepo : TransactionRepository,
+    private val settingsRepo    : SettingsRepository
 ) : ViewModel() {
 
     private val _customerId = MutableStateFlow(0L)
@@ -45,8 +48,17 @@ class LedgerViewModel @Inject constructor(
                 transactionRepo.getTransactionsForCustomer(cid),
                 transactionRepo.getNetBalanceForCustomer(cid),
                 _searchQuery,
-                _selectedFilter
-            ) { customer, txs, balance, query, filter ->
+                _selectedFilter,
+                settingsRepo.languageCode
+            ) { args ->
+                // The vararg overload provides an Array<Any?> — extract with casts
+                val customer = args[0] as? Customer
+                val txs = args[1] as? List<Transaction> ?: emptyList()
+                val balance = args[2] as? Double ?: 0.0
+                val query = args[3] as? String ?: ""
+                val filter = args[4] as? TransactionFilter ?: TransactionFilter.ALL
+                val settings = args[5] as? String ?: "en"
+
                 val filtered = filterAndSearchTransactions(txs, query, filter)
                 LedgerUiState(
                     customer      = customer,
@@ -55,7 +67,8 @@ class LedgerViewModel @Inject constructor(
                     netBalance    = balance,
                     isLoading     = false,
                     searchQuery   = query,
-                    selectedFilter = filter
+                    selectedFilter = filter,
+                    languageCode  = settings
                 )
             }
         }

@@ -16,6 +16,7 @@ import androidx.core.os.LocaleListCompat
 import com.nammasanthe.ledger.data.repository.SettingsRepository
 import com.nammasanthe.ledger.ui.navigation.LedgerNavGraph
 import com.nammasanthe.ledger.ui.theme.NammaSantheLedgerTheme
+import com.nammasanthe.ledger.utils.MachineTranslationService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,6 +37,9 @@ class MainActivity : ComponentActivity() {
                 AppCompatDelegate.setApplicationLocales(
                     LocaleListCompat.forLanguageTags(languageCode)
                 )
+
+                // Preload both translation models so language switching feels instant.
+                MachineTranslationService.preloadEnglishKannadaModels()
             }
 
             NammaSantheLedgerTheme {

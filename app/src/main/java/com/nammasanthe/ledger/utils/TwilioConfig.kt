@@ -26,7 +26,7 @@ object TwilioConfig {
      *       }
      *   }
      */
-    fun getAccountSid(context: Context): String? {
+    fun getAccountSid(): String? {
         return try {
             val clazz = Class.forName("com.nammasanthe.ledger.BuildConfig")
             val field = clazz.getField("TWILIO_ACCOUNT_SID")
@@ -46,7 +46,7 @@ object TwilioConfig {
      *       }
      *   }
      */
-    fun getAuthToken(context: Context): String? {
+    fun getAuthToken(): String? {
         return try {
             val clazz = Class.forName("com.nammasanthe.ledger.BuildConfig")
             val field = clazz.getField("TWILIO_AUTH_TOKEN")
@@ -66,7 +66,7 @@ object TwilioConfig {
      *       }
      *   }
      */
-    fun getPhoneNumber(context: Context): String? {
+    fun getPhoneNumber(): String? {
         return try {
             val clazz = Class.forName("com.nammasanthe.ledger.BuildConfig")
             val field = clazz.getField("TWILIO_PHONE_NUMBER")
@@ -81,9 +81,9 @@ object TwilioConfig {
      * Check if all required Twilio credentials are configured.
      */
     fun isConfigured(context: Context): Boolean {
-        val accountSid = getAccountSid(context)
-        val authToken = getAuthToken(context)
-        val phoneNumber = getPhoneNumber(context)
+        val accountSid = getAccountSid()
+        val authToken = getAuthToken()
+        val phoneNumber = getPhoneNumber()
 
         val configured = !accountSid.isNullOrBlank() &&
                 !authToken.isNullOrBlank() &&
@@ -105,10 +105,10 @@ object TwilioConfig {
      */
     fun createService(context: Context): TwilioSmsService? {
         return if (isConfigured(context)) {
-            val accountSid = getAccountSid(context)!!
-            val authToken = getAuthToken(context)!!
-            val phoneNumber = getPhoneNumber(context)!!
-            TwilioSmsService(context, accountSid, authToken, phoneNumber)
+            val accountSid = getAccountSid()!!
+            val authToken = getAuthToken()!!
+            val phoneNumber = getPhoneNumber()!!
+            TwilioSmsService(accountSid, authToken, phoneNumber)
         } else {
             Log.w(tag, "Cannot create TwilioSmsService: credentials not configured")
             null

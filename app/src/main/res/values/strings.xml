@@ -99,4 +99,7 @@
     <!-- Placeholder Hints -->
     <string name="placeholder_customer_name">e.g. Kamala</string>
     <string name="placeholder_note">e.g. Tomatoes and onions</string>
+    <string name="placeholder_amount">0.00</string>
+    <string name="placeholder_phone_hint">10-digit number</string>
+    <string name="phone_prefix">+91 </string>
 </resources>

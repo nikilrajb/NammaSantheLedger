@@ -12,7 +12,18 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ReceiptLong
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -34,6 +45,7 @@ import com.nammasanthe.ledger.ui.theme.*
 import com.nammasanthe.ledger.utils.DateUtils
 import com.nammasanthe.ledger.utils.FormatUtils
 import com.nammasanthe.ledger.utils.WhatsAppHelper
+import com.nammasanthe.ledger.utils.rememberTranslatedText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +59,7 @@ fun LedgerScreen(
     val state   by viewModel.uiState.collectAsStateWithLifecycle()
     val context  = LocalContext.current
     var txToDelete by remember { mutableStateOf<Transaction?>(null) }
+    val translatedTitle by rememberTranslatedText(state.customer?.name.orEmpty(), state.languageCode)
 
     LaunchedEffect(customerId) { viewModel.loadCustomer(customerId) }
 
@@ -62,10 +75,16 @@ fun LedgerScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(state.customer?.name ?: stringResource(R.string.nav_home), color = SurfaceWhite, fontWeight = FontWeight.Bold) },
+                title = {
+                    Text(
+                        if (state.customer == null) stringResource(R.string.nav_home) else translatedTitle,
+                        color = SurfaceWhite,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, stringResource(R.string.back), tint = SurfaceWhite)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back), tint = SurfaceWhite)
                     }
                 },
                 actions = {
@@ -102,6 +121,7 @@ fun LedgerScreen(
                         CustomerHeaderCard(
                             customer = it,
                             balance  = state.netBalance,
+                            currentLanguage = state.languageCode,
                             context  = context
                         )
                     }
@@ -129,7 +149,7 @@ fun LedgerScreen(
                 if (state.transactions.isEmpty()) {
                     item {
                         EmptyState(
-                            icon     = Icons.Default.ReceiptLong,
+                            icon = Icons.AutoMirrored.Filled.ReceiptLong,
                             title    = stringResource(R.string.no_transactions_yet),
                             subtitle = stringResource(R.string.add_transaction_hint)
                         )
@@ -146,6 +166,7 @@ fun LedgerScreen(
                     items(state.filteredTransactions, key = { it.id }) { tx ->
                         TransactionRow(
                             transaction = tx,
+                            languageCode = state.languageCode,
                             onDelete    = { txToDelete = tx }
                         )
                     }
@@ -161,10 +182,13 @@ fun LedgerScreen(
 private fun CustomerHeaderCard(
     customer : com.nammasanthe.ledger.data.local.entity.Customer,
     balance  : Double,
+    currentLanguage: String,
     context  : Context
 ) {
     // In a real app, vendorName could come from DataStore/Settings
     val vendorName = "Namma Santhe Vendor"
+    val translatedName by rememberTranslatedText(customer.name, currentLanguage)
+    val translatedVendorName by rememberTranslatedText(vendorName, currentLanguage)
 
     Card(
         modifier  = Modifier.fillMaxWidth(),
@@ -177,11 +201,11 @@ private fun CustomerHeaderCard(
 
             Row(verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                CustomerAvatar(name = customer.name, size = 64)
+                CustomerAvatar(name = translatedName, size = 64)
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(customer.name, style = MaterialTheme.typography.headlineSmall,
+                    Text(translatedName, style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold, color = TextPrimary)
-                    Text("+91 ${customer.phone}",
+                    Text(stringResource(R.string.phone_prefix) + customer.phone,
                         style = MaterialTheme.typography.bodyMedium, color = TextSecondary)
                 }
             }
@@ -218,13 +242,13 @@ private fun CustomerHeaderCard(
                 if (balance > 0.0) {
                     Button(
                         onClick = {
-                            WhatsAppHelper.sendReminder(context, customer, balance, vendorName)
+                            WhatsAppHelper.sendReminder(context, customer.copy(name = translatedName), balance, translatedVendorName)
                         },
                         colors  = ButtonDefaults.buttonColors(containerColor = CreditGreen),
                         shape   = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Icon(Icons.Default.Send, null, modifier = Modifier.size(18.dp))
+                        Icon(Icons.AutoMirrored.Filled.Send, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(8.dp))
                         Text(stringResource(R.string.remind), fontWeight = FontWeight.Bold)
                     }
@@ -237,6 +261,7 @@ private fun CustomerHeaderCard(
 @Composable
 private fun TransactionRow(
     transaction : Transaction,
+    languageCode: String,
     onDelete    : () -> Unit
 ) {
     val isCredit = transaction.type == TransactionType.CREDIT
@@ -283,7 +308,8 @@ private fun TransactionRow(
                 Text(DateUtils.formatDateTime(transaction.timestamp),
                     style = MaterialTheme.typography.bodySmall, color = TextSecondary)
                 if (!transaction.note.isNullOrBlank()) {
-                    Text(transaction.note, style = MaterialTheme.typography.bodySmall,
+                    val translatedNote by rememberTranslatedText(transaction.note.orEmpty(), languageCode)
+                    Text(translatedNote, style = MaterialTheme.typography.bodySmall,
                         color = TextPrimary.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
                 }
             }

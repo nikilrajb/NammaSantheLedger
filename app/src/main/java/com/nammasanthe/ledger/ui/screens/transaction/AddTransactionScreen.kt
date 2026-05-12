@@ -103,10 +103,10 @@ fun AddTransactionScreen(
                     value  = state.amountText,
                     onValueChange = viewModel::onAmountChange,
                     label  = { Text(stringResource(R.string.amount)) },
-                    placeholder = { Text("0.00") },
+                    placeholder = { Text(stringResource(R.string.placeholder_amount)) },
                     leadingIcon = { 
                         Text(
-                            text = "₹ ", 
+                            text = stringResource(R.string.placeholder_amount).let { "₹ $it" },
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = Saffron700,

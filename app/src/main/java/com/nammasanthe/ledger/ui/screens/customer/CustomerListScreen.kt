@@ -31,6 +31,7 @@ fun CustomerListScreen(
     viewModel          : CustomerViewModel = hiltViewModel()
 ) {
     val customers by viewModel.customers.collectAsStateWithLifecycle()
+    val languageCode by viewModel.languageCode.collectAsStateWithLifecycle()
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
@@ -105,6 +106,7 @@ fun CustomerListScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(customers, key = { it.id }) { customer ->
+                        val displayName by com.nammasanthe.ledger.utils.rememberTranslatedText(customer.name, languageCode)
                         Card(
                             modifier  = Modifier.fillMaxWidth().clickable { onNavigateToLedger(customer.id) },
                             colors    = CardDefaults.cardColors(containerColor = SurfaceWhite),
@@ -116,13 +118,13 @@ fun CustomerListScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
-                                CustomerAvatar(name = customer.name, size = 52)
+                                CustomerAvatar(name = displayName, size = 52)
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(customer.name,
+                                    Text(displayName,
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.Bold,
                                         color = TextPrimary)
-                                    Text("+91 ${customer.phone}",
+                                    Text(stringResource(R.string.phone_prefix) + customer.phone,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = TextSecondary)
                                 }

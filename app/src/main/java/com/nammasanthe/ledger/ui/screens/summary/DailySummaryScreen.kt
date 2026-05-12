@@ -25,6 +25,7 @@ import com.nammasanthe.ledger.ui.components.SummaryCard
 import com.nammasanthe.ledger.ui.theme.*
 import com.nammasanthe.ledger.utils.DateUtils
 import com.nammasanthe.ledger.utils.FormatUtils
+import com.nammasanthe.ledger.utils.rememberTranslatedText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -188,8 +189,9 @@ fun DailySummaryScreen(
                                 color = amtColor)
                             Text(DateUtils.formatTime(tx.timestamp),
                                 style = MaterialTheme.typography.bodySmall, color = TextSecondary)
-                            tx.note?.let { 
-                                Text(it, style = MaterialTheme.typography.bodySmall,
+                            tx.note?.let {
+                                val translatedNote by rememberTranslatedText(it, state.languageCode)
+                                Text(translatedNote, style = MaterialTheme.typography.bodySmall,
                                     color = TextPrimary.copy(alpha = 0.8f),
                                     maxLines = 1)
                             }

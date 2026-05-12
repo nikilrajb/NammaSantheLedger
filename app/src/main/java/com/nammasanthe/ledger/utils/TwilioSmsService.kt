@@ -23,7 +23,6 @@ import kotlinx.coroutines.withContext
  * DO NOT hardcode credentials in source code.
  */
 class TwilioSmsService(
-    context: Context,
     private val accountSid: String,
     private val authToken: String,
     private val twilioPhoneNumber: String

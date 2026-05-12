@@ -26,6 +26,7 @@ import com.nammasanthe.ledger.ui.components.CustomerAvatar
 import com.nammasanthe.ledger.ui.components.EmptyState
 import com.nammasanthe.ledger.ui.theme.*
 import com.nammasanthe.ledger.utils.FormatUtils
+import com.nammasanthe.ledger.utils.rememberTranslatedText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -113,7 +114,9 @@ fun HomeScreen(
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
                 contentPadding = PaddingValues(
                     start = 16.dp,
                     top = 16.dp,
@@ -177,6 +180,7 @@ fun HomeScreen(
                     CustomerHomeRow(
                         customer = customer,
                         balance = balance,
+                        currentLanguage = state.languageCode,
                         onClick = { onNavigateToLedger(customer.id) },
                         onAddTx = { onNavigateToAddTx(customer.id) }
                     )
@@ -533,9 +537,12 @@ private fun languageLabel(code: String): String = when (code) {
 private fun CustomerHomeRow(
     customer: com.nammasanthe.ledger.data.local.entity.Customer,
     balance: Double,
+    currentLanguage: String,
     onClick: () -> Unit,
     onAddTx: () -> Unit
 ) {
+    val translatedName by rememberTranslatedText(customer.name, currentLanguage)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -549,10 +556,10 @@ private fun CustomerHomeRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            CustomerAvatar(name = customer.name, size = 48)
+            CustomerAvatar(name = translatedName, size = 48)
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = customer.name,
+                    text = translatedName,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = TextPrimary
